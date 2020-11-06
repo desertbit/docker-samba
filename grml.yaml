@@ -1,0 +1,13 @@
+env:
+    DOCKERREPO: desertbit/samba
+    DOCKERTAG:  latest
+  
+commands:
+    build:
+        help: build the container
+        exec: |
+            docker build --pull . -t ${DOCKERREPO}:${DOCKERTAG}
+    push:
+        help: push the container
+        exec: |
+            docker push ${DOCKERREPO}:${DOCKERTAG}
