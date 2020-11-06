@@ -1,4 +1,4 @@
-# Docker samba image
+# A secure samba docker image
 ## Running
 ```
 docker run \
