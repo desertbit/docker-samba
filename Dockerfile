@@ -18,9 +18,9 @@ RUN addgroup -S smbuser && \
 COPY smb.conf /etc/samba/smb.conf
 
 RUN mkdir /data && \
-    mkdir /config && \
     chown smbuser:smbuser /data && \
-    chown smbuser:smbuser /config
+    mkdir /config && \
+    chmod 0700 /config
             
 VOLUME [ "/config", "/data" ]
 
