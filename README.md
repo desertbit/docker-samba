@@ -33,7 +33,7 @@ TimeoutStartSec=0
 Restart=always
 ExecStartPre=-/usr/bin/docker kill samba
 ExecStartPre=-/usr/bin/docker rm samba
-ExecStartPre=/usr/bin/docker pull desertbit/samba
+ExecStartPre=-/usr/bin/docker pull desertbit/samba
 ExecStart=/usr/bin/docker run \
     --name samba \
     --hostname "Samba" \
