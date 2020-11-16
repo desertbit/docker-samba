@@ -45,7 +45,7 @@ ExecStart=/usr/bin/docker run \
         -u foo \
         -u moo \
         -s share@foo:rw,moo:ro
-ExecStop=/usr/bin/docker kill samba
+ExecStop=/usr/bin/docker stop samba
 ```
 
 ## Thanks to
