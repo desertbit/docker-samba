@@ -6,7 +6,7 @@ commands:
     build:
         help: build the container
         exec: |
-            docker build --pull . -t ${DOCKERREPO}:${DOCKERTAG}
+            docker build --pull --no-cache . -t ${DOCKERREPO}:${DOCKERTAG}
     push:
         help: push the container
         exec: |
