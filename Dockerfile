@@ -1,5 +1,5 @@
 # Based on https://github.com/dperson/samba
-FROM alpine
+FROM alpine:3.12
 MAINTAINER Roland Singer, roland.singer@desertbit.com
 
 # Install dependencies.
@@ -13,8 +13,9 @@ RUN apk --no-cache --no-progress upgrade && \
         tzdata
 
 # Setup samba.
-RUN addgroup -S smbuser && \
-    adduser -S -D -H -h /tmp -s /sbin/nologin -G smbuser -g 'Samba User' smbuser
+RUN addgroup -g 2222 -S smbuser && \
+    adduser -u 2222 -S -D -H -h /tmp -s /sbin/nologin -G smbuser -g 'Samba User' smbuser && \
+    mkdir -p /var/log/samba
 COPY smb.conf /etc/samba/smb.conf
 
 RUN mkdir /data && \
