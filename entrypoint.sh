@@ -94,4 +94,4 @@ if [[ $PASSWD == "true" ]] ; then
 fi
 
 # Run samba.
-exec ionice -c 3 smbd --foreground --no-process-group --log-stdout --configfile=/etc/samba/smb.conf
+exec ionice -c 3 smbd --foreground --no-process-group --debug-stdout --configfile=/etc/samba/smb.conf
