@@ -1,3 +1,6 @@
+version: 1.0
+project: docker-samba
+
 env:
     DOCKERREPO: desertbit/samba
     DOCKERTAG:  latest
