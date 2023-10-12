@@ -1,5 +1,5 @@
 # Based on https://github.com/dperson/samba
-FROM alpine:3.17
+FROM alpine:3.18
 MAINTAINER Roland Singer, roland.singer@desertbit.com
 
 # Install dependencies.
