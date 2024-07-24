@@ -3,7 +3,6 @@ set -e
 
 CONFIG_FILE="/etc/samba/runtime.conf"
 HOSTNAME=`hostname`
-PASSWD="false"
 
 # Global options.
 set -e
@@ -13,6 +12,20 @@ netbios name = $HOSTNAME
 server string = $HOSTNAME
 
 EOF
+
+# If the user supplies a custom uid/gid combination, change the default smbuser accordingly.
+if [[ -n $USER ]]; then
+    IFS=: read uid gid <<<"$USER"
+    if [[ "$uid" == "" ]] || [[ "$gid" == "" ]]; then
+        echo "invalid UID/GID"
+        exit 1
+    fi
+
+    groupmod --gid ${uid} smbuser
+    usermod --uid ${uid} --gid ${gid} smbuser
+
+    echo "Using ${uid}:${gid} for smbuser"
+fi
 
 # Parse options.
 while getopts ":u:p:s:h" opt; do
@@ -36,7 +49,7 @@ case $opt in
         IFS=: read user password <<<"$OPTARG"
         echo "'$user'"
         echo "$password" |tee - |smbpasswd -s -a "$user"
-        PASSWD="true"
+        echo "WARNING: This should not be a runtime parameter!"
         ;;
     s)
         echo -n "Add share "
@@ -87,11 +100,6 @@ case $opt in
         ;;
 esac
 done
-
-if [[ $PASSWD == "true" ]] ; then
-    echo "Stopping, because password was set. This must not be a runtime argument!"
-    exit 1
-fi
 
 # Run samba.
 exec ionice -c 3 smbd --foreground --no-process-group --debug-stdout --configfile=/etc/samba/smb.conf

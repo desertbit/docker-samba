@@ -1,10 +1,13 @@
 # Based on https://github.com/dperson/samba
-FROM alpine:3.18
-MAINTAINER Roland Singer, roland.singer@desertbit.com
+FROM alpine:3.20
+LABEL org.opencontainers.image.authors="Roland Singer, roland.singer@desertbit.com"
+
+# Load security patches.
+# See https://pythonspeed.com/articles/security-updates-in-docker/ for a reasoning.
+RUN apk upgrade --no-progress --update-cache --available
 
 # Install dependencies.
-RUN apk --no-cache --no-progress upgrade && \
-    apk --no-cache --no-progress add \
+RUN apk --no-cache --no-progress add \
         bash \
         samba \
         samba-common-tools \
